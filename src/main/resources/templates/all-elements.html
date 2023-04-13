@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title>My Vacancies</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+<header class="b-head" id="myHeader">
+    <a th:href="@{/vacancies/menu}" class="button">
+        <span>&larr;</span> Back
+    </a>
+    <a th:href="@{/vacancies/create}" class="button">Add new vacancy</a>
+        <form method="get" th:action="@{/vacancies/all-elements/search}">
+            <div class="search-container">
+                <input class="search-input" type="text" name="name" placeholder="Search by name...">
+                <button class="search-button" type="submit"><div class="fa fa-search"></div></button>
+            </div>
+        </form>
+</header>
+
+    <table class="my-table">
+        <thead>
+        <tr>
+            <th>Name <i class="arrow"></i></th>
+            <th>Date of Submitting for Vacancy <i class="arrow"></i></th>
+            <th>Date of Appointment <i class="arrow"></i></th>
+            <th>Employment Status <i class="arrow"></i></th>
+            <th>Text <i class="arrow"></i></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vacancy : ${all}">
+            <td th:text="${vacancy.name}"></td>
+            <td th:text="${#temporals.format(vacancy.dateOfSubmittingForVacancy, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${#temporals.format(vacancy.dateOfAppointment, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:class="${vacancy.status.toString().toLowerCase().equals('offer') ? 'status_green':
+            (vacancy.status.toString().toLowerCase().equals('waiting') ? 'status_yellow' : 'status_red')}"
+                th:text="${vacancy.status}"></td>
+            <td class = "d-none" th:text="${vacancy.id}"></td>
+            <td th:text="${vacancy.text.length() >= 50} ?
+                ${vacancy.text.substring(0, 50) + '...'} :
+                ${vacancy.text}"></td>
+            <td><input type="checkbox" name="selectedIds" th:value="${vacancy.id}" /></td>
+        </tr>
+        </tbody>
+    </table>
+
+<div class="button-group">
+    <form method="post" th:action="@{/vacancies/all-elements/generate-excel}">
+        <input id="selectedIds1" type="hidden" name ="selectedIds" value="${#ctx.selectedIds}" />
+        <button type="submit" class="button">Generate Excel</button>
+    </form>
+    <form th:method="delete" th:action="@{/vacancies/all-elements/delete}">
+        <input id="selectedIds2" type="hidden" name="selectedIds" value="${#ctx.selectedIds}" />
+        <button type="submit" class="button">Delete</button>
+    </form>
+</div>
+
+
+<div class="pagination">
+    <ul>
+        <li th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}"
+            th:class="${pageNumber == currentPage} ? 'active' : (${pageNumber} == 0 ? 'disabled' : '')"
+            th:if="${pageNumber < totalPages}">
+            <a th:if="${pageNumber != currentPage}"
+               th:href="@{/vacancies/all-elements/(page=${pageNumber}, size=${size})}"
+               th:text="${pageNumber + 1}"></a>
+            <span th:if="${pageNumber == currentPage}" th:text="${pageNumber + 1}"></span>
+        </li>
+    </ul>
+</div>
+
+
+<form th:action="@{/vacancies/all-elements}">
+    <label for="size">Rows per page:</label>
+    <select id="size" name="size" onchange="this.form.submit()">
+        <option value="5" th:selected="${size == 5}">5</option>
+        <option value="10" th:selected="${size == 10}">10</option>
+        <option value="20" th:selected="${size == 20}">20</option>
+        <option value="50" th:selected="${size == 50}">50</option>
+    </select>
+</form>
+
+<script src="/js/table-list.js"></script>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="/js/table-list.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head class="create_head">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title>Create Vacancy Card</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<header class="b-head" id="myHeader">
+    <a href="#" class="button">Button 1</a>
+    <a href="#" class="button">Button 2</a>
+    <a href="#" id="button1" class="button">Login</a>
+</header>
+<body class="create_body">
+<h1 class="create_h1"></h1>
+<form class="create_form" th:action="@{/vacancies/create/save}" th:object="${vacancyCard}" method="POST" id="vacancy-form">
+    <div class="form-group">
+        <label class="create_label" for="name">Name:</label>
+        <input class="create_input form-control" id="name" type="text" th:field="*{name}">
+        <span class="text-danger" th:if="${bindingResult.hasErrors()}" th:each="error : ${bindingResult.allErrors}">
+    <span th:text="${error.defaultMessage}"></span>
+</span>
+    </div>
+    <p>
+        <label class="create_label">Date of Submitting:</label>
+        <input class="create_input" type="datetime-local" th:field="*{dateOfSubmittingForVacancy}" />
+    </p>
+    <p>
+        <label class="create_label">Date of Appointment:</label>
+        <input class="create_input" type="datetime-local" th:field="*{dateOfAppointment}" />
+    </p>
+    <p>
+        <label class="create_label">Status:</label>
+        <select class="create_select"  th:field="*{status}">
+            <option class="create_option" th:value="OFFER">Offer</option>
+            <option class="create_option" th:value="WAITING">Waiting</option>
+            <option class="create_option" th:value="REFUSED">Refused</option>
+        </select>
+    </p>
+    <p>
+        <label class="create_label">Text:</label>
+        <textarea th:field="*{text}"></textarea>
+    </p>
+    <p>
+    <label class="create_label">Synchronize:</label>
+        <input type="checkbox" name="synchronize" id="synchronize-checkbox" class="toggle-checkbox">
+        <label for="synchronize-checkbox"></label>
+
+    </p>
+    <button class="create_button" type="submit" id="save-button">Save</button>
+</form>
+<div th:replace="fragments/footer :: footer"></div>
+<script src="/js/calender.js"></script>
+</body>
+</html>

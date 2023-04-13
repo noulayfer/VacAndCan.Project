@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title>Vacancies Menu</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
+<header class="b-head" id="myHeader">
+    <a href="/" class="button">
+        <span>&larr;</span> Back to main menu
+    </a>
+</header>
+
+
+<div style="margin-top: 70px;" class="main-welcome">
+    <h1>Vacancies Menu</h1>
+</div>
+
+<div style="font-size: 20px;" class="main-text">
+    Choose what you want to do with your vacancy cards.
+</div>
+
+<div class="menu-button-container">
+    <form method="GET" th:action="@{/vacancies/all-elements}">
+        <button type="submit" class="menu-button" onmouseover="showText('vac-menu-button-text1', this)"
+                onmouseout="hideText('vac-menu-button-text1')">Show my vacancies table</button>
+    </form>
+
+    <form method="GET" th:action="@{/vacancies/create}">
+        <button type="submit" class="menu-button" onmouseover="showText('vac-menu-button-text2', this)"
+                onmouseout="hideText('vac-menu-button-text2')">Insert new vacancy card</button>
+    </form>
+
+    <button id="menu-login" class="menu-button" onmouseover="showText('vac-menu-button-text3', this)"
+            onmouseout="hideText('vac-menu-button-text3')">Login</button>
+</div>
+
+<div id="vac-menu-button-text1" class="button-text">
+    <h3>Show my vacancies</h3>
+    <p>Click here if you want to see you vacancy table. (Authorization first).</p>
+</div>
+
+<div id="vac-menu-button-text2" class="button-text">
+    <h3>I want to add new vacancy.</h3>
+    <p>You find new vacancy and want to add it to your table? Click here. (Authorization first).</p>
+</div>
+
+<div id="vac-menu-button-text3" class="button-text">
+    <h3>Login/Sign up</h3>
+    <p>Start using the power of this site. Sign up if you do not have account yet and get access to
+        functionality of the project.</p>
+</div>
+
+<script src="/js/vac-menu-script.js"></script>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

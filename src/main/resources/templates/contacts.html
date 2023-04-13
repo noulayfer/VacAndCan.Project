@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
+<header class="b-head" id="myHeader">
+    <a href="/" class="button">
+        <span>&larr;</span> Back to main menu
+    </a>
+</header>
+
+<div style="margin-top: 70px;" class="main-welcome">
+    <h1>Contacts</h1>
+</div>
+
+<div style="font-size: 20px;" class="main-text">
+    <p>Choose the way of connecting me:</p>
+    <p><a id="contacts-a1" href="mailto:dqniejl@gmail.com">E-mail: dqniejl@gmail.com</a></p>
+    <p><a id="contacts-a2" href="https://t.me/noulayfer">telegram: @noulayfer</a></p>
+    <p><a id="contacts-a3" href="https://www.linkedin.com/in/daniil-fedorenko-821a04259/">LinkedIn: @noulayfer</a></p>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer-line"></div>
+                <div class="footer-buttons">
+                    <a th:action="@{/about-us}" class="footer-button">About us</a>
+                </div>
+                <div class="footer-copyright">
+                    &copy; Daniil Fedorenko Vac.&Can. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title>Van.&Can.</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
+<header class="b-head" id="myHeader">
+    <a href="#" class="button">Button 1</a>
+    <a href="#" class="button">Button 2</a>
+    <a href="#" id="button1" class="button">Login</a>
+</header>
+
+<div style="margin-top: 70px;" class="main-welcome">
+    <h1>Welcome to the Vac.&Can.</h1>
+</div>
+
+<div style="font-size: 20px;" class="main-text">
+    We all looking for something. That is the vacancy that you dream of or perfect candidate.
+    Our goal is to help you, structuring your work.
+    Choose your side.
+</div>
+
+<form method="GET" th:action="@{/vacancies/menu}">
+    <button type="submit" class="index-choose left" onmouseover="showText('index-button-text1', this)" onmouseout="hideText('index-button-text1')">Vac.</button>
+</form>
+
+<form method="GET" th:action="@{/recruiter_menu}">
+<button class="index-choose right" onmouseover="showText('index-button-text2', this)" onmouseout="hideText('index-button-text2')">Can.</button>
+</form>
+
+<div id="index-button-text1" class="button-text">
+    <h3>I am looking for a job.</h3>
+    <p>This section will give your functionality to structure the process of searching the job.
+        You could make a table of vacancies, generate excel tables, synchronize your interviews with Google calendar.
+        Try it now and good luck!</p>
+</div>
+
+<div id="index-button-text2" class="button-text">
+    <h3>I am looking for a candidate.</h3>
+    <p> If you choose this section, you could make a table of candidate, sort them by skills,
+        parse LinkedIn profile to get short review about candidate, make an appointments that will be synchronized with
+        Google calendar. Try it now and good luck!</p>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+<script src="/js/index-script.js"></script>
+</body>
+</html>

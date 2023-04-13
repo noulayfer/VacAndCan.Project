@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
+<header class="b-head" id="myHeader">
+    <a href="/" class="button">
+        <span>&larr;</span> Back to main menu
+    </a>
+</header>
+
+<div style="margin-top: 70px;" class="main-welcome">
+    <h1>About us</h1>
+</div>
+
+<div style="font-size: 20px;" class="main-text">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eu luctus libero. Curabitur semper ornare ligula, vitae fermentum enim ultrices vel. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam viverra erat quis libero suscipit, vitae dictum dolor tempor. Aenean convallis sapien eget quam fermentum, in vestibulum sapien bibendum. Fusce rhoncus augue sit amet metus bibendum, quis sagittis dolor elementum. Nullam eu elit purus. Sed ultrices dui quam, ut tristique massa suscipit ac.</p>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer-line"></div>
+                <div class="footer-buttons">
+                    <a th:action="@{/contacts}" class="footer-button">Contacts</a>
+                </div>
+                <div class="footer-copyright">
+                    &copy; Daniil Fedorenko Vac.&Can. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
