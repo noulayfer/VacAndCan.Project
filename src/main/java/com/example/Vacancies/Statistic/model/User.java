@@ -1,14 +1,14 @@
 package com.example.Vacancies.Statistic.model;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.UUID;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -18,41 +18,47 @@ import java.util.UUID;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @Column(name = "id", columnDefinition = "uuid", updatable = false)
-    private UUID id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
 
+    @Size(min = 3, max = 15)
     private String username;
+
+    @NotNull
     private String password;
 
+    @NotNull
+    @Column(unique=true)
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VacancyCard> vacancyCards;
 
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Authorities role;
 
-    public User(String username, String email, String password, Role role) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
 
-    public enum Role {
+
+    public enum Authorities implements GrantedAuthority {
         ADMIN,
-        AUTHORIZED_USER
+        USER;
+
+        @Override
+        public String getAuthority() {
+            return "ROLE_" + name();
+        }
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return Collections.singletonList(role);
     }
 
-    @Override
     public String getPassword() {
-        return null;
+        return password;
     }
-
     @Override
     public String getUsername() {
         return username;

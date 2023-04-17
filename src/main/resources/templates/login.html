@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body class="log-page">
+<div class="login-page">
+    <div class="form">
+        <form th:action="@{/login}" method="post" class="login-form" >
+            <input type="text" placeholder="username" name="username" required/>
+            <input type="password" placeholder="password" name="password" required/>
+            <button class="log-but" type="submit">login</button>
+        </form>
+        <form action="/register">
+            <button class="reg-but" type="submit">register</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,12 +1,21 @@
 package com.example.Vacancies.Statistic.controller;
 
+import com.example.Vacancies.Statistic.model.User;
 import com.example.Vacancies.Statistic.model.VacancyCard;
+import com.example.Vacancies.Statistic.service.UserDetailsServiceImpl;
 import com.example.Vacancies.Statistic.service.VacancyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -16,13 +25,18 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/vacancies")
 public class VacancyCardController {
+    @Autowired
     private final VacancyService vacancyService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     public VacancyCardController(final VacancyService vacancyService) {
         this.vacancyService = vacancyService;
@@ -32,9 +46,14 @@ public class VacancyCardController {
     public String showMyVacancies(@RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "10") int size,
                                   @RequestParam(defaultValue = "") String name,
+                                  Authentication authentication,
                                   Model model) {
 
-        Page<VacancyCard> vacanciesPage = vacancyService.getPaginatedAndSortedVacancies(page, size);
+
+        String username = authentication.getName();
+        User user = userDetailsService.getUserByUsername(username);
+        String userId = user.getId();
+        Page<VacancyCard> vacanciesPage = vacancyService.getPaginatedAndSortedVacancies(page, size, userId);
         List<VacancyCard> vacancies = vacanciesPage.getContent();
         int totalPages = vacancies.isEmpty() ? 1 : vacanciesPage.getTotalPages();
         int currentPage = vacancies.isEmpty() ? 0 : page;
@@ -58,7 +77,10 @@ public class VacancyCardController {
     }
 
     @GetMapping("/menu")
-    public String vacanciesMenu() {
+    public String vacanciesMenu(Principal principal) {
+        Optional.ofNullable(principal).ifPresent(
+                principal1 -> System.out.println(principal1.getName())
+        );
         return "vacancies_menu";
     }
 

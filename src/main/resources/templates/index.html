@@ -6,10 +6,20 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title>Van.&Can.</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body>
 <header class="b-head" id="myHeader">
-    <a href="#" class="button">Button 1</a>
-    <a href="#" class="button">Button 2</a>
-    <a href="#" id="button1" class="button">Login</a>
+    <a th:if="${adminPanel}" href="/admin/users" class="button">Admin Panel</a>
+    <span class="username-text" th:if="${username}" th:text="${'Welcome, ' + username}"></span>
+    <a th:unless="${username}" href="/login" id="button1" class="button">Login</a>
+    <a th:unless="${username}" href="/register" id="button3" class="button">Register</a>
+    <a th:if="${username}" href="/logout" id="button2" class="button">Logout</a>
 </header>
 
 <div style="margin-top: 70px;" class="main-welcome">

@@ -38,10 +38,11 @@ public class VacancyService {
         return vacancyRepository.findAll();
     }
 
-    public Page<VacancyCard> getPaginatedAndSortedVacancies(int page, int size) {
+    public Page<VacancyCard> getPaginatedAndSortedVacancies(int page, int size, String userId) {
         Pageable pageable = PageRequest.of(page, size);
-        return vacancyRepository.findAll(pageable);
+        return vacancyRepository.findByUserId(userId, pageable);
     }
+
 
     public List<VacancyCard> searchByName(String name) {
         return vacancyRepository.findByNameContainingIgnoreCase(name);

@@ -28,8 +28,12 @@ public class VacancyCard {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dateOfAppointment;
 
+    @Enumerated(EnumType.STRING)
     private EmploymentStatus status;
     private String text;
+
+    @ManyToOne
+    private User user;
 
     public enum EmploymentStatus {
         OFFER,
