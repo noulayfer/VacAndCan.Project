@@ -33,13 +33,14 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/vacancies")
 public class VacancyCardController {
-    @Autowired
     private final VacancyService vacancyService;
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    public VacancyCardController(final VacancyService vacancyService) {
+    @Autowired
+    public VacancyCardController(final VacancyService vacancyService,
+                                 final UserDetailsServiceImpl userDetailsService) {
         this.vacancyService = vacancyService;
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping("/all-elements")
@@ -67,8 +68,11 @@ public class VacancyCardController {
     }
 
     @GetMapping("/all-elements/search")
-    public String search(@RequestParam("name") String name, Model model) {
-        List<VacancyCard> vacancies = vacancyService.searchByName(name);
+    public String search(@RequestParam("name") String name, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        User user = userDetailsService.getUserByUsername(username);
+        String userId = user.getId();
+        List<VacancyCard> vacancies = vacancyService.searchByName(name, userId);
         model.addAttribute("all", vacancies);
         model.addAttribute("currentPage", 0);
         model.addAttribute("totalPages", 1);
@@ -77,10 +81,7 @@ public class VacancyCardController {
     }
 
     @GetMapping("/menu")
-    public String vacanciesMenu(Principal principal) {
-        Optional.ofNullable(principal).ifPresent(
-                principal1 -> System.out.println(principal1.getName())
-        );
+    public String vacanciesMenu() {
         return "vacancies_menu";
     }
 
@@ -94,14 +95,16 @@ public class VacancyCardController {
     @Transactional
     @PostMapping("/create/save")
     public String saveVacancy(@Valid @ModelAttribute("vacancyInfoCandidate") VacancyCard vacancyCard,
-                              BindingResult bindingResult, Model model) {
+                              BindingResult bindingResult, Model model, Authentication authentication) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("vacancyCard", vacancyCard);
             model.addAttribute("bindingResult", bindingResult);
             return "create_vacancy";
         }
-
-        vacancyService.saveVacancy(vacancyCard);
+        String username = authentication.getName();
+        User user = userDetailsService.getUserByUsername(username);
+        String userId = user.getId();
+        vacancyService.saveVacancy(vacancyCard, userId);
         return "redirect:/vacancies/all-elements";
     }
 
@@ -121,11 +124,31 @@ public class VacancyCardController {
                 .body(new InputStreamResource(in));
     }
 
-    @DeleteMapping ("/all-elements/delete")
+    @DeleteMapping("/all-elements/delete")
     public String deleteVacancies(@RequestParam(value = "selectedIds", required = false) List<String> selectedIds) {
         if (selectedIds != null && !selectedIds.isEmpty()) {
             vacancyService.deleteVacanciesByIds(selectedIds);
         }
+        return "redirect:/vacancies/all-elements";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editVacancy(@PathVariable String id, Model model) {
+        VacancyCard vacancyCard = vacancyService.getById(id);
+        model.addAttribute("vacancyCard", vacancyCard);
+        model.addAttribute("bindingResult", new BeanPropertyBindingResult(new VacancyCard(), "vacancyCard"));
+        return "edit";
+    }
+
+    @PutMapping("/edit/{id}")
+    public String updateVacancyCard(@PathVariable("id") String id,
+                                    @Valid @ModelAttribute("vacancyCard") VacancyCard vacancyCard,
+                                    BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "edit";
+        }
+        vacancyService.updateVacancyCard(id, vacancyCard);
         return "redirect:/vacancies/all-elements";
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface VacancyRepository extends JpaRepository<VacancyCard, String> {
-    List<VacancyCard> findByNameContainingIgnoreCase(String name);
+    List<VacancyCard> findByNameAndUserIdContainingIgnoreCase(String name, String id);
 
 
     Page<VacancyCard> findByUserId(String userId, Pageable pageable);

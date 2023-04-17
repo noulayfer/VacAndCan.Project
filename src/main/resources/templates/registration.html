@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration Page</title>
+    <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
+<div th:replace="fragments/header :: #myHeader"></div>
 <h1>Registration Form</h1>
 <form th:action="@{/register}" th:object="${user}" method="post">
     <label for="username">Username:</label>
@@ -18,5 +20,6 @@
     <br>
     <input type="submit" value="Register">
 </form>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

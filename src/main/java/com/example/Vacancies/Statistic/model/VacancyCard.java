@@ -33,6 +33,7 @@ public class VacancyCard {
     private String text;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public enum EmploymentStatus {

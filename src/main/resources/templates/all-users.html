@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>All Users</title>
+    <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
+<div th:replace="fragments/header :: #myHeader"></div>
 <div class="admin-form">
     <h1>All Users</h1>
     <div class="admin-body">
@@ -38,5 +40,6 @@
         </table>
     </div>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

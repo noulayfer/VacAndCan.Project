@@ -69,6 +69,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return user;
     }
 
+    public User getUserById(String id) {
+        User user = userRepository.findById(id).orElseGet(null);
+        return user;
+    }
+
     public List<User> getAll() {
         return (List<User>) userRepository.findAll();
     }

@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>Login Page</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
+<div th:replace="fragments/header :: #myHeader"></div>
 <body class="log-page">
 <div class="login-page">
     <div class="form">
@@ -19,5 +21,6 @@
         </form>
     </div>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

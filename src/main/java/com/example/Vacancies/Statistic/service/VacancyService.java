@@ -22,20 +22,43 @@ import java.util.Optional;
 
 @Service
 public class VacancyService {
-    private VacancyRepository vacancyRepository;
+    private final VacancyRepository vacancyRepository;
+
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public VacancyService(final VacancyRepository vacancyRepository) {
+    public VacancyService(final VacancyRepository vacancyRepository,
+                          final UserDetailsServiceImpl userDetailsService) {
         this.vacancyRepository = vacancyRepository;
+        this.userDetailsService = userDetailsService;
     }
 
     @Transactional
-    public void saveVacancy(final VacancyCard vacancyCard) {
+    public void saveVacancy(final VacancyCard vacancyCard, String userId) {
+        vacancyCard.setUser(userDetailsService.getUserById(userId));
         vacancyRepository.save(vacancyCard);
     }
 
     public List<VacancyCard> getAll() {
         return vacancyRepository.findAll();
+    }
+
+    public VacancyCard getById(String id) {
+        return vacancyRepository.getById(id);
+    }
+
+    public void updateVacancyCard(String id, VacancyCard vacancyCard) {
+        Optional<VacancyCard> optionalVacancy = vacancyRepository.findById(id);
+
+        if (optionalVacancy.isPresent()) {
+            VacancyCard vacancy = optionalVacancy.get();
+            vacancy.setName(vacancyCard.getName());
+            vacancy.setDateOfSubmittingForVacancy(vacancyCard.getDateOfSubmittingForVacancy());
+            vacancy.setDateOfAppointment(vacancyCard.getDateOfAppointment());
+            vacancy.setStatus(vacancyCard.getStatus());
+            vacancy.setText(vacancyCard.getText());
+            vacancyRepository.save(vacancy);
+        }
     }
 
     public Page<VacancyCard> getPaginatedAndSortedVacancies(int page, int size, String userId) {
@@ -44,8 +67,8 @@ public class VacancyService {
     }
 
 
-    public List<VacancyCard> searchByName(String name) {
-        return vacancyRepository.findByNameContainingIgnoreCase(name);
+    public List<VacancyCard> searchByName(String name, String userId) {
+        return vacancyRepository.findByNameAndUserIdContainingIgnoreCase(name, userId);
     }
 
     public List<VacancyCard> getByIds(List<String> ids) {

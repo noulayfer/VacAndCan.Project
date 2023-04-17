@@ -38,7 +38,7 @@
         </thead>
         <tbody>
         <tr th:each="vacancy : ${all}">
-            <td th:text="${vacancy.name}"></td>
+            <td><a th:href="@{/vacancies/edit/{id}(id=${vacancy.id})}" th:text="${vacancy.name}" th:class="link-style"></a></td>
             <td th:text="${#temporals.format(vacancy.dateOfSubmittingForVacancy, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${#temporals.format(vacancy.dateOfAppointment, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:class="${vacancy.status.toString().toLowerCase().equals('offer') ? 'status_green':

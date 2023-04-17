@@ -3,19 +3,19 @@
 <head class="create_head">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
-    <title>Create Vacancy Card</title>
+    <title>Edit Vacancy Card</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <div th:replace="fragments/header :: #myHeader"></div>
 <body class="create_body">
-<h1 class="create_h1"></h1>
-<form class="create_form" th:action="@{/vacancies/create/save}" th:object="${vacancyCard}" method="POST" id="vacancy-form">
+<h1 class="create_h1">Edit Vacancy Card</h1>
+<form class="create_form" th:action="@{/vacancies/edit/{id}(id=${vacancyCard.id})}" th:object="${vacancyCard}" th:method="PUT" id="vacancy-form">
     <div class="form-group">
         <label class="create_label" for="name">Name:</label>
         <input class="create_input form-control" id="name" type="text" th:field="*{name}">
         <span class="text-danger" th:if="${bindingResult.hasErrors()}" th:each="error : ${bindingResult.allErrors}">
-    <span th:text="${error.defaultMessage}"></span>
-</span>
+            <span th:text="${error.defaultMessage}"></span>
+        </span>
     </div>
     <p>
         <label class="create_label">Date of Submitting:</label>
@@ -28,20 +28,14 @@
     <p>
         <label class="create_label">Status:</label>
         <select class="create_select"  th:field="*{status}">
-            <option class="create_option" th:value="OFFER">Offer</option>
-            <option class="create_option" th:value="WAITING">Waiting</option>
-            <option class="create_option" th:value="REFUSED">Refused</option>
+            <option class="create_option" th:value="OFFER" th:selected="${vacancyCard.status == 'OFFER'}">Offer</option>
+            <option class="create_option" th:value="WAITING" th:selected="${vacancyCard.status == 'WAITING'}">Waiting</option>
+            <option class="create_option" th:value="REFUSED" th:selected="${vacancyCard.status == 'REFUSED'}">Refused</option>
         </select>
     </p>
     <p>
         <label class="create_label">Text:</label>
         <textarea th:field="*{text}"></textarea>
-    </p>
-    <p>
-    <label class="create_label">Synchronize:</label>
-        <input type="checkbox" name="synchronize" id="synchronize-checkbox" class="toggle-checkbox">
-        <label for="synchronize-checkbox"></label>
-
     </p>
     <button class="create_button" type="submit" id="save-button">Save</button>
 </form>

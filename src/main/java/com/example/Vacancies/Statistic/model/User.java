@@ -20,6 +20,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "user_id")
     private String id;
 
     @Size(min = 3, max = 15)

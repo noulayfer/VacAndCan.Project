@@ -1,15 +1,11 @@
 package com.example.Vacancies.Statistic.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.security.Principal;
 
 @Controller
 public class MainMenuController {
@@ -35,14 +31,6 @@ public class MainMenuController {
     public String aboutUs() {
         return "about-us";
     }
-
-    @GetMapping("/test")
-    @ResponseBody
-    public String test(Principal principal) {
-        System.out.println(principal.toString());
-        return principal.getName();
-    }
-
 
     @GetMapping("/contacts")
     public String contacts() {
