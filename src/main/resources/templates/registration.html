@@ -4,21 +4,25 @@
     <meta charset="UTF-8">
     <title>Registration Page</title>
     <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
 <div th:replace="fragments/header :: #myHeader"></div>
 <h1>Registration Form</h1>
-<form th:action="@{/register}" th:object="${user}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+<form class="registration-form" th:action="@{/register}" th:object="${user}" method="post">
+    <label class="registration-label" for="username">Username:</label>
+    <input class="registration-input" type="text" id="username" name="username" required>
     <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    <label class="registration-label" for="password">Password:</label>
+    <input class="registration-input" type="password" id="password" name="password" required>
     <br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+    <label class="registration-label" for="email">Email:</label>
+    <input class="registration-input" type="email" id="email" name="email" required>
     <br>
-    <input type="submit" value="Register">
+    <input class="registration-input" type="submit" value="Register">
+    <span class="text-danger" th:if="${bindingResult.hasErrors()}"
+          th:each="error : ${bindingResult.allErrors}"
+          th:text="${error.defaultMessage}" style="color: red;"></span>
 </form>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

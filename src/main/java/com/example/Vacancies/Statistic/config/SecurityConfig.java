@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().permitAll()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/", true)
                 .and()
                 .rememberMe()
                 .and()

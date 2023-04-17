@@ -237,6 +237,123 @@ html, body {
     text-decoration: underline;
 }
 
+.text-danger{
+    color: red;
+}
+
+.registration-form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.registration-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.registration-input {
+    display: block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.registration-input[type="submit"] {
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.registration-input[type="submit"]:hover {
+    background-color: #000000;
+}
+
+.log-page {
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+    height: 100%;
+}
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.log-form {
+    background-color: #000;
+    color: #fff;
+    padding: 80px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registration-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: 16px;
+    color: #fff;
+    background-color: #000;
+}
+
+.reg-frm-but {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.log-but, .reg-but {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.log-but:hover, .reg-but:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.reg-but {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+}
+
+.reg-but:hover {
+    background-color: #000;
+    color: #fff;
+}
+
 
 #vac-menu-button-text1, #vac-menu-button-text2, #vac-menu-button-text3 {
     right: -250%;

@@ -143,9 +143,11 @@ public class VacancyCardController {
     @PutMapping("/edit/{id}")
     public String updateVacancyCard(@PathVariable("id") String id,
                                     @Valid @ModelAttribute("vacancyCard") VacancyCard vacancyCard,
-                                    BindingResult bindingResult) {
+                                    BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("vacancyCard", vacancyCard);
+            model.addAttribute("bindingResult", bindingResult);
             return "edit";
         }
         vacancyService.updateVacancyCard(id, vacancyCard);

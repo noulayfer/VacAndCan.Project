@@ -8,19 +8,18 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <div th:replace="fragments/header :: #myHeader"></div>
-<body class="log-page">
 <div class="login-page">
-    <div class="form">
-        <form th:action="@{/login}" method="post" class="login-form" >
-            <input type="text" placeholder="username" name="username" required/>
-            <input type="password" placeholder="password" name="password" required/>
+    <div class="log-form">
+        <form th:action="@{/login}" th:object="${user}" method="post" class="registration-form">
+            <input class="registration-input" type="text" placeholder="username" th:field="*{username}" required />
+            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></div>
+            <input class="registration-input" type="password" placeholder="password" th:field="*{password}" required />
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
             <button class="log-but" type="submit">login</button>
-        </form>
-        <form action="/register">
-            <button class="reg-but" type="submit">register</button>
         </form>
     </div>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+
+    <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

@@ -14,7 +14,7 @@
         <label class="create_label" for="name">Name:</label>
         <input class="create_input form-control" id="name" type="text" th:field="*{name}">
         <span class="text-danger" th:if="${bindingResult.hasErrors()}" th:each="error : ${bindingResult.allErrors}">
-    <span th:text="${error.defaultMessage}"></span>
+    <span th:text="${error.defaultMessage}" style="color: red;"></span>
 </span>
     </div>
     <p>
