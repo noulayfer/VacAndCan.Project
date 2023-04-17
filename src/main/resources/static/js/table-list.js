@@ -77,7 +77,6 @@ headers.forEach((header, index) => {
     });
 });
 
-// Add a click listener to the arrow to toggle sorting for this column
 document.addEventListener('click', event => {
     const arrow = event.target.closest('.arrow');
     if (arrow) {
